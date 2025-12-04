@@ -6,13 +6,11 @@ import { VStack } from "@vapor-ui/core";
 import { useGeoLocation } from "@/hooks/useGeoLocation";
 import { setMapType, zoomIn, zoomOut } from "@/utils/mapUtils";
 
-// 1. Props 인터페이스 정의
 interface KakaoMapProps {
   width?: string;
   height?: string;
 }
 
-// 2. Props 구조 분해 할당 및 기본값 설정
 const KakaoMap = ({ width = "100%", height = "100%" }: KakaoMapProps) => {
   const { location, isLoading } = useGeoLocation();
 
@@ -38,7 +36,7 @@ const KakaoMap = ({ width = "100%", height = "100%" }: KakaoMapProps) => {
     };
 
     const timer = setTimeout(() => {
-      // 지도가 이미 생성되어 있다면 새로 생성하지 않음 (React StrictMode 등 고려)
+      // 지도가 이미 생성되어 있다면 새로 생성하지 않음
       if (!map) {
         const kakaoMap = new window.kakao.maps.Map(container, options);
         setMap(kakaoMap);
@@ -48,7 +46,6 @@ const KakaoMap = ({ width = "100%", height = "100%" }: KakaoMapProps) => {
     return () => clearTimeout(timer);
   }, [isLoading]); // 의존성 배열 유지
 
-  // 창 크기가 변할 때 지도의 중심을 유지하거나 레이아웃을 다시 잡는 로직이 필요할 수 있음
   useEffect(() => {
     if (map) {
       map.relayout(); // 지도의 크기가 변경되었을 때 레이아웃 갱신
