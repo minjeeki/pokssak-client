@@ -10,9 +10,23 @@ interface KakaoMapProps {
   height?: string;
   places: Place[];
   onMarkerClick: (place: Place) => void;
+  onMapCreate?: (map: kakao.maps.Map) => void;
+  onBoundsChanged?: (bounds: {
+    swLat: number;
+    swLng: number;
+    neLat: number;
+    neLng: number;
+  }) => void;
 }
 
-const KakaoMap = ({ width = "100%", height = "400px", places, onMarkerClick }: KakaoMapProps) => {
+const KakaoMap = ({
+  width = "100%",
+  height = "400px",
+  places,
+  onMarkerClick,
+  onMapCreate,
+  onBoundsChanged,
+}: KakaoMapProps) => {
   const { location, isLoading, error } = useGeoLocation();
 
   const defaultCenter = { lat: 33.44997901075206, lng: 126.91819928968532 };
@@ -25,8 +39,35 @@ const KakaoMap = ({ width = "100%", height = "400px", places, onMarkerClick }: K
     }
   }, [isLoading, location, error]);
 
+  const handleMapCreate = (map: kakao.maps.Map) => {
+    if (onMapCreate) {
+      onMapCreate(map);
+    }
+  };
+
+  const handleBoundsChanged = (map: kakao.maps.Map) => {
+    if (onBoundsChanged) {
+      const bounds = map.getBounds();
+      const swLatLng = bounds.getSouthWest();
+      const neLatLng = bounds.getNorthEast();
+
+      onBoundsChanged({
+        swLat: swLatLng.getLat(),
+        swLng: swLatLng.getLng(),
+        neLat: neLatLng.getLat(),
+        neLng: neLatLng.getLng(),
+      });
+    }
+  };
+
   return (
-    <Map center={mapCenter} level={3} style={{ width: width, height: height }}>
+    <Map
+      center={mapCenter}
+      level={3}
+      style={{ width: width, height: height }}
+      onCreate={handleMapCreate}
+      onBoundsChanged={handleBoundsChanged}
+    >
       <MapTypeControl position={kakao.maps.ControlPosition.TOPRIGHT} />
 
       {/* 장소 배열 기반 마커 표시 */}

@@ -1,13 +1,15 @@
-import { useState } from "react";
-
 import { Field, Flex, Select, Text } from "@vapor-ui/core";
 
 import { PREFERENCES } from "@/constants/preferences";
 
-const Header = () => {
-  const [value, setValue] = useState<string>(PREFERENCES[0].label);
+interface HeaderProps {
+  selectedPreference: string;
+  onPreferenceChange: (preference: string) => void;
+}
+
+const Header = ({ selectedPreference, onPreferenceChange }: HeaderProps) => {
   const handleValueChange = (newValue: unknown) => {
-    setValue(newValue as string);
+    onPreferenceChange(newValue as string);
   };
   return (
     <Flex
@@ -16,7 +18,7 @@ const Header = () => {
       paddingRight={"$300"}
     >
       <Field.Root name="country" className={"gap-v-100"}>
-        <Select.Root border={"none"} value={value} onValueChange={handleValueChange}>
+        <Select.Root border={"none"} value={selectedPreference} onValueChange={handleValueChange}>
           <Select.TriggerPrimitive border="none" padding={"$000"}>
             <Select.ValuePrimitive>
               {(value: string) =>
