@@ -29,7 +29,7 @@ const BottomBar = () => {
   };
 
   return (
-    <div className="border-t-v-gray-100 fixed bottom-0 z-50 w-full border-t bg-white shadow-lg">
+    <div className="border-t-v-gray-100 fixed bottom-0 z-50 w-full border-t bg-white">
       <Flex
         justifyContent={"space-around"}
         alignItems={"center"}
