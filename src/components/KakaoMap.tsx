@@ -1,0 +1,92 @@
+import { useEffect, useRef, useState } from "react";
+
+import type { KakaoMapType } from "@/global";
+import { VStack } from "@vapor-ui/core";
+
+import { useGeoLocation } from "@/hooks/useGeoLocation";
+import { setMapType, zoomIn, zoomOut } from "@/utils/mapUtils";
+
+const KakaoMap = () => {
+  const { location, error, isLoading } = useGeoLocation();
+
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const [map, setMap] = useState<KakaoMapType | null>(null);
+  const [level, setLevel] = useState<number>(3);
+
+  useEffect(() => {
+    if (!window.kakao) {
+      return;
+    }
+
+    const container = mapContainer.current;
+    if (!container) {
+      return;
+    }
+
+    console.log("위치정보", location);
+
+    const options = {
+      center: new window.kakao.maps.LatLng(
+        location?.latitude || 33.450701,
+        location?.longitude || 126.570667
+      ),
+      level: 4,
+    };
+
+    const timer = setTimeout(() => {
+      const kakaoMap = new window.kakao.maps.Map(container, options);
+      setMap(kakaoMap);
+    }, 200);
+    console.log(level);
+
+    return () => clearTimeout(timer);
+  }, [isLoading]); // dependency는 빈 배열
+
+  return (
+    <VStack>
+      {isLoading ? (
+        <div>위치 정보를 불러오는 중입니다...</div>
+      ) : error ? (
+        <div>위치 정보를 불러오는 중 오류가 발생했습니다.</div>
+      ) : (
+        <div>
+          {location?.longitude}
+          <br />
+          {location?.latitude}
+        </div>
+      )}
+      <div id="map" className="map_wrap" ref={mapContainer}>
+        {/* 지도타입 컨트롤 div */}
+        <div className="custom_typecontrol radius_border">
+          <span
+            id="btnRoadmap"
+            className="selected_btn"
+            onClick={() => map && setMapType(map, "roadmap")}
+          >
+            지도
+          </span>
+          <span id="btnSkyview" className="btn" onClick={() => map && setMapType(map, "skyview")}>
+            스카이뷰
+          </span>
+        </div>
+        {/* 지도 확대, 축소 컨트롤 div */}
+        <div className="custom_zoomcontrol radius_border">
+          <span onClick={() => map && zoomIn(map, setLevel)}>
+            <img
+              src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png"
+              alt="확대"
+            />
+          </span>
+          <span onClick={() => map && zoomOut(map, setLevel)}>
+            <img
+              src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"
+              alt="축소"
+            />
+          </span>
+        </div>
+      </div>
+    </VStack>
+  );
+};
+
+export default KakaoMap;

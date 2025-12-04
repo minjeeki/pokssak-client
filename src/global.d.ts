@@ -15,7 +15,7 @@ interface Kakao {
 }
 
 interface KakaoMaps {
-  Map: new (container: HTMLElement | string, options: KakaoMapOptions) => KakaoMap;
+  Map: new (container: HTMLElement | string, options: KakaoMapOptions) => KakaoMapType;
   LatLng: new (lat: number, lng: number) => KakaoLatLng;
   Marker: new (options: KakaoMarkerOptions) => KakaoMarker;
   MapTypeId: KakaoMapTypeId;
@@ -26,7 +26,7 @@ interface KakaoMapTypeId {
   HYBRID: string;
 }
 
-export interface KakaoMap {
+export interface KakaoMapType {
   setCenter(latlng: KakaoLatLng): void;
   setLevel(level: number): void;
   getLevel(): number;
@@ -44,12 +44,12 @@ interface KakaoMapOptions {
 }
 
 interface KakaoMarker {
-  setMap(map: KakaoMap | null): void;
+  setMap(map: KakaoMapType | null): void;
 }
 
 interface KakaoMarkerOptions {
   position: KakaoLatLng;
-  map?: KakaoMap;
+  map?: KakaoMapType;
 }
 
 /* ---------------- Android Bridge ---------------- */
