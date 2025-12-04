@@ -4,7 +4,6 @@ import type { Place } from "@/types/kakaoMap";
 import type { Spot } from "@/types/map";
 
 import KakaoMap from "@/components/KakaoMap";
-import BottomBar from "@/components/common/BottomBar";
 import Header from "@/components/common/Header";
 import PlaceBottomSheet from "@/components/map/PlaceBottomSheet";
 import RefreshButton from "@/components/map/RefreshButton";
