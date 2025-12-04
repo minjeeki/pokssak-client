@@ -6,7 +6,7 @@ const RefreshButton = () => {
   return (
     <Button
       className={
-        "rounded-v-900 py-v-50 px-v-200 fixed top-14 left-1/2 z-50 w-fit -translate-x-1/2 shadow-[0px_1px_3px_0px_rgba(0,0,0,0.20)]"
+        "rounded-v-900 py-v-50 px-v-200 fixed top-20 left-1/2 z-50 w-fit -translate-x-1/2 shadow-[0px_1px_3px_0px_rgba(0,0,0,0.20)]"
       }
       colorPalette={"primary"}
       variant={"outline"}

@@ -1,26 +1,51 @@
-import { Field, Flex, Select } from "@vapor-ui/core";
+import { useState } from "react";
+
+import { Field, Flex, Select, Text } from "@vapor-ui/core";
+
+import icon_moon from "@/assets/icon_moon.svg";
 
 const Header = () => {
+  const choices = ["조용한", "로컬스러운", "활동적인", "자연 친화적인", "핫플레이스"];
+  const [value, setValue] = useState<string>(choices[0]);
+  const handleValueChange = (newValue: unknown) => {
+    setValue(newValue as string);
+  };
   return (
     <Flex
       className="border-b-v-gray-100 h-v-700 fixed top-0 z-50 w-full items-center border-t bg-white"
       paddingLeft={"$300"}
       paddingRight={"$300"}
     >
-      <Flex className={"gap-v-100 items-center"}>
-        <div>이미지</div>
-        <Field.Root name="country" className={"gap-v-100"}>
-          <Select.Root placeholder="국가를 선택하세요">
-            <Select.Trigger id="country-select" />
-            <Select.Popup>
-              <Select.Item value="조용한">조용한</Select.Item>
-              <Select.Item value="여유로운">여유로운</Select.Item>
-              <Select.Item value="일본">일본</Select.Item>
-              <Select.Item value="중국">중국</Select.Item>
-            </Select.Popup>
-          </Select.Root>
-        </Field.Root>
-      </Flex>
+      <Field.Root name="country" className={"gap-v-100"}>
+        <Select.Root border={"none"} value={value} onValueChange={handleValueChange}>
+          <Select.TriggerPrimitive border="none" padding={"$000"}>
+            <Select.ValuePrimitive>
+              {(value: string) =>
+                value ? (
+                  <Flex className={"gap-v-100 items-center"}>
+                    <img src={icon_moon} />
+                    <Text typography={"heading5"}>{value}</Text>
+                  </Flex>
+                ) : (
+                  <Select.PlaceholderPrimitive>
+                    <Text typography="heading5" foreground="secondary-200">
+                      분위기를 선택해주세요
+                    </Text>
+                  </Select.PlaceholderPrimitive>
+                )
+              }
+            </Select.ValuePrimitive>
+            <Select.TriggerIconPrimitive />
+          </Select.TriggerPrimitive>
+          <Select.Popup>
+            {choices.map((item, i) => (
+              <Select.Item key={i} value={item}>
+                {item}
+              </Select.Item>
+            ))}
+          </Select.Popup>
+        </Select.Root>
+      </Field.Root>
     </Flex>
   );
 };
