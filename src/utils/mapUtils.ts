@@ -1,15 +1,15 @@
 import type { KakaoMapType } from "@/global";
 
-export const zoomIn = (map: KakaoMapType, setLevel: React.Dispatch<number>) => {
+export const zoomIn = (map: KakaoMapType) => {
   const currentLevel = map.getLevel();
   map.setLevel(currentLevel - 1);
-  setLevel(map.getLevel());
+  // setLevel(map.getLevel());
 };
 
-export const zoomOut = (map: KakaoMapType, setLevel: React.Dispatch<number>) => {
+export const zoomOut = (map: KakaoMapType) => {
   const currentLevel = map.getLevel();
   map.setLevel(currentLevel + 1);
-  setLevel(map.getLevel());
+  // setLevel(map.getLevel());
 };
 
 //장소 선택시 해당 장소 확대

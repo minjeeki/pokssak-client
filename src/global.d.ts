@@ -31,6 +31,7 @@ export interface KakaoMapType {
   setLevel(level: number): void;
   getLevel(): number;
   setMapTypeId(type: string): void;
+  relayout(): void;
 }
 
 interface KakaoLatLng {
