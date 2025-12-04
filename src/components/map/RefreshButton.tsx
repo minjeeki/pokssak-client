@@ -1,6 +1,5 @@
 import { Button, Text } from "@vapor-ui/core";
-
-import RefreshIcon from "@/assets/map/RefreshOutlineIcon.webp";
+import { RefreshOutlineIcon } from "@vapor-ui/icons";
 
 const RefreshButton = () => {
   return (
@@ -11,7 +10,7 @@ const RefreshButton = () => {
       colorPalette={"primary"}
       variant={"outline"}
     >
-      <img src={RefreshIcon} />
+      <RefreshOutlineIcon />
       <Text typography={"subtitle1"}>이 위치에서 검색</Text>
     </Button>
   );
