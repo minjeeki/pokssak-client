@@ -1,7 +1,11 @@
 import { Button, Text } from "@vapor-ui/core";
 import { RefreshOutlineIcon } from "@vapor-ui/icons";
 
-const RefreshButton = () => {
+interface RefreshButtonProps {
+  onClick?: () => void;
+}
+
+const RefreshButton = ({ onClick }: RefreshButtonProps) => {
   return (
     <Button
       className={
@@ -9,6 +13,7 @@ const RefreshButton = () => {
       }
       colorPalette={"primary"}
       variant={"outline"}
+      onClick={onClick}
     >
       <RefreshOutlineIcon />
       <Text typography={"subtitle1"}>이 위치에서 검색</Text>
