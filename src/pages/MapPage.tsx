@@ -4,7 +4,6 @@ import type { Place } from "@/types/kakaoMap";
 
 import CommonBottomModal from "@/components/CommonBottomModal";
 import KakaoMap from "@/components/KakaoMap";
-import BottomBar from "@/components/common/BottomBar";
 import Header from "@/components/common/Header";
 import RefreshButton from "@/components/map/RefreshButton";
 
@@ -77,8 +76,6 @@ export default function MapPage() {
           </p>
         </div>
       </CommonBottomModal>
-
-      <BottomBar />
     </div>
   );
 }

@@ -1,28 +1,25 @@
 import { useState } from "react";
 
 import { Button, Flex } from "@vapor-ui/core";
-// 아이콘 컴포넌트
 import { HomeIcon, LocationIcon, UserIcon } from "@vapor-ui/icons";
+import { useNavigate } from "react-router-dom";
 
-// 내비게이션 항목
 const navItems = [
-  // 아이콘 컴포넌트 저장
-  { id: "home", Icon: HomeIcon, label: "홈" },
-  { id: "location", Icon: LocationIcon, label: "위치" },
-  { id: "user", Icon: UserIcon, label: "My" },
+  { id: "home", Icon: HomeIcon, label: "홈", path: "/" },
+  { id: "location", Icon: LocationIcon, label: "위치", path: "/map" },
+  { id: "user", Icon: UserIcon, label: "My", path: "/mypage" },
 ];
 
 const BottomBar = () => {
-  // 활성화 상태
+  const navigate = useNavigate();
+
   const [activeItem, setActiveItem] = useState("home");
 
-  // 클릭 핸들러
-  const handleItemClick = (itemId: string) => {
+  const handleItemClick = (itemId: string, path: string) => {
     setActiveItem(itemId);
-    console.log(`${itemId} 아이템 선택`);
+    navigate(path);
   };
 
-  // 색상 정의
   const ACTIVE_COLOR = "var(--vapor-color-blue-400)";
   const DEFAULT_COLOR = "var(--vapor-color-gray-200)";
 
@@ -41,12 +38,11 @@ const BottomBar = () => {
           return (
             <Button
               key={item.id}
-              onClick={() => handleItemClick(item.id)}
-              className={"h-full w-full"}
+              onClick={() => handleItemClick(item.id, item.path)}
+              className="h-full w-full"
               backgroundColor={"transparent"}
             >
               <IconComponent
-                // 색상 적용
                 color={isActive ? ACTIVE_COLOR : DEFAULT_COLOR}
                 className="mb-1 h-6 w-6"
               />
